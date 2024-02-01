@@ -42,7 +42,7 @@ rm -rf $1
 # git clone --depth 1 https://github.com/NateLol/luci-app-beardropper
 # git clone --depth 1 https://github.com/yaof2/luci-app-ikoolproxy
 # git clone --depth 1 https://github.com/project-lede/luci-app-godproxy
-# git clone --depth 1 https://github.com/tty228/luci-app-serverchan
+git clone --depth 1 https://github.com/tty228/luci-app-wechatpush
 # git clone --depth 1 https://github.com/4IceG/luci-app-sms-tool smstool && mvdir smstool
 # git clone --depth 1 https://github.com/silime/luci-app-xunlei
 # git clone --depth 1 https://github.com/BCYDTZ/luci-app-UUGameAcc
@@ -84,7 +84,7 @@ rm -rf $1
 # git clone --depth 1 https://github.com/Hyy2001X/AutoBuild-Packages && rm -rf AutoBuild-Packages/luci-app-adguardhome && mvdir AutoBuild-Packages
 # git clone --depth 1 https://github.com/sirpdboy/sirpdboy-package && mv -n sirpdboy-package/{luci-app-adguardhome} ./ ; rm -rf sirpdboy-package 
 git clone https://github.com/sirpdboy/luci-app-netdata ./luci-app-netdata
-git clone --depth 1 https://github.com/oooopera/phtunnel1.git &&  mv -u phtunnel1/* ./ ; rm -rf phtunnel1
+# git clone --depth 1 https://github.com/oooopera/phtunnel1.git &&  mv -u phtunnel1/* ./ ; rm -rf phtunnel1
 git clone https://github.com/messense/aliyundrive-webdav.git  && mv aliyundrive-webdav aliyundrive-webdav-all && mv  -u aliyundrive-webdav-all/openwrt/aliyundrive-webdav ./ && mv -u aliyundrive-webdav-all/openwrt/luci-app-aliyundrive-webdav ./ ; rm -rf aliyundrive-webdav-all
 #git clone --depth 1 https://github.com/haiibo/openwrt-packages.git && mv -u openwrt-packages/{brook,homebox} ./ ; rm -rf openwrt-packages
 #git clone --depth 1 https://github.com/NueXini/NueXini_Packages.git && mv -n NueXini_Packages/{phtunnel,aliyundrive-webdav,luci-app-aliyundrive-webdav,ipv6-helper,luci-app-adguardhome,luci-app-netdata,luci-app-netspeedtest,luci-app-openclash,luci-app-tcpdump,luci-app-vlmcsd,vlmcsd,brook,homebox} ./ ; rm -rf NueXini_Packages
@@ -128,7 +128,7 @@ git clone https://github.com/kongfl888/luci-app-adguardhome.git ./luci-app-adgua
 # # # # git clone --depth 1 https://github.com/kenzok8/litte && mv -n litte/luci-theme-atmaterial_new litte/luci-theme-mcat litte/luci-theme-tomato ./ ; rm -rf litte
 # # # # git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus helloworld/naiveproxy ./ ; rm -rf helloworld
 # # # # git clone --depth 1 https://github.com/QiuSimons/openwrt-mos && mv -n openwrt-mos/luci-app-mosdns ./ ; rm -rf openwrt-mos
-# # # # git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 passwall2 && mv -n passwall2/luci-app-passwall2 ./;rm -rf passwall2
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 passwall2 && mv -n passwall2/luci-app-passwall2 ./;rm -rf passwall2
 # # # # git clone --depth 1 -b luci https://github.com/xiaorouji/openwrt-passwall passwall && mv -n passwall/luci-app-passwall ./;rm -rf passwall
 # # # # git clone --depth 1 https://github.com/SSSSSimon/tencentcloud-openwrt-plugin-ddns && mv -n tencentcloud-openwrt-plugin-ddns/tencentcloud_ddns ./luci-app-tencentddns; rm -rf tencentcloud-openwrt-plugin-ddns
 # # # # git clone --depth 1 https://github.com/Tencent-Cloud-Plugins/tencentcloud-openwrt-plugin-cos && mv -n tencentcloud-openwrt-plugin-cos/tencentcloud_cos ./luci-app-tencentcloud-cos; rm -rf tencentcloud-openwrt-plugin-cos
