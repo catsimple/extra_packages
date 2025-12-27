@@ -43,7 +43,7 @@ rm -rf $1
 # git clone --depth 1 https://github.com/yaof2/luci-app-ikoolproxy
 # git clone --depth 1 https://github.com/project-lede/luci-app-godproxy
 git clone --depth 1 https://github.com/tty228/luci-app-wechatpush
-git clone --depth 1 https://github.com/lisaac/luci-app-diskman diskman && sed -i 's/kmod-fs-ntfs/kmod-fs-ntfs3/g' diskman/applications/luci-app-diskman/Makefile && mv -n diskman/applications/* ./; rm -rf diskman
+git clone --depth 1 https://github.com/lisaac/luci-app-diskman diskman && mv -n diskman/applications/* ./;rm -rf diskman
 # git clone --depth 1 https://github.com/4IceG/luci-app-sms-tool smstool && mvdir smstool
 # git clone --depth 1 https://github.com/silime/luci-app-xunlei
 # git clone --depth 1 https://github.com/BCYDTZ/luci-app-UUGameAcc
