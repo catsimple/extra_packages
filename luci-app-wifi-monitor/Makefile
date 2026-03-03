@@ -21,23 +21,6 @@ fi
 exit 0
 endef
 
-define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./root/etc/config/wifi_monitor $(1)/etc/config/
-
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller/admin
-	$(INSTALL_DATA) ./root/usr/lib/lua/luci/controller/admin/wifi_monitor.lua $(1)/usr/lib/lua/luci/controller/admin/
-
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/admin_status
-	$(INSTALL_DATA) ./root/usr/lib/lua/luci/view/admin_status/wifi_monitor.htm $(1)/usr/lib/lua/luci/view/admin_status/
-
-	$(INSTALL_DIR) $(1)/usr/libexec/wifi
-	$(INSTALL_BIN) ./root/usr/libexec/wifi/* $(1)/usr/libexec/wifi/
-
-	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
-	$(INSTALL_DATA) ./root/usr/share/rpcd/acl.d/luci-app-wifi-monitor.json $(1)/usr/share/rpcd/acl.d/
-endef
-
 include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
