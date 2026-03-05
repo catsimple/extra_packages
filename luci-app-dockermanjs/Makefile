@@ -14,6 +14,22 @@ PKG_LICENSE:=AGPL-3.0
 PKG_MAINTAINER:=Paul Donald <newtwen+github@gmail.com> \
 		Florian Eckert <fe@dev.tdt.de>
 
+<<<<<<< HEAD
+define Package/$(PKG_NAME)/preinst
+#!/bin/sh
+[ -n "$${IPKG_INSTROOT}" ] && exit 0
+
+if opkg status luci-app-dockerman >/dev/null 2>&1; then
+	echo "ERROR: luci-app-dockermanjs conflicts with luci-app-dockerman."
+	echo "Please remove luci-app-dockerman first."
+	exit 1
+fi
+
+exit 0
+endef
+
+=======
+>>>>>>> c0dc24ad9ecb563fa9f4e32d909128aab4c5f6ce
 
 include ../../luci.mk
 

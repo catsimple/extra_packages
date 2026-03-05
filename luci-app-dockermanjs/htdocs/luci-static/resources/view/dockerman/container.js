@@ -454,6 +454,16 @@ return dm2.dv.extend({
 		s.tab('info', _('Info'));
 
 		o = s.taboption('info', form.Value, 'Name', _('Name'));
+<<<<<<< HEAD
+		o.cfgvalue = (sid) => {
+			const name = this.map.data.data[sid]?.Name || '';
+			return String(name).replace(/^\//, '');
+		};
+		o.write = function(sid, value) {
+			this.map.data.data[sid].Name = String(value || '').replace(/^\//, '');
+		};
+=======
+>>>>>>> c0dc24ad9ecb563fa9f4e32d909128aab4c5f6ce
 
 		o = s.taboption('info', form.DummyValue, 'Id', _('ID'));
 
@@ -1269,6 +1279,10 @@ return dm2.dv.extend({
 		const map = this.map;
 		if (!map)
 			return Promise.reject(new Error(_('Form is not ready yet.')));
+<<<<<<< HEAD
+		const originalName = String(this.container?.Name || '').replace(/^\//, '');
+=======
+>>>>>>> c0dc24ad9ecb563fa9f4e32d909128aab4c5f6ce
 
 		const get = (opt) => map.data.get('json', 'cont', opt);
 		const gethc = (opt) => map.data.get('json', 'hostcfg', opt);
@@ -1312,8 +1326,17 @@ return dm2.dv.extend({
 				else
 					ui.addTimeLimitedNotification(_('Container updated'), [_('OK')], 4000, 'info');
 
+<<<<<<< HEAD
+				const currentName = originalName || String(this_container?.Name || '').replace(/^\//, '');
+				const nameInput = document.querySelector('input[name="cbid.json.cont.Name"]');
+				const parsedCont = map.data?.data?.cont || {};
+				const targetName = String(
+					nameInput?.value ?? parsedCont?.Name ?? get('Name') ?? ''
+				).trim().replace(/^\//, '');
+=======
 				const currentName = (this_container.Name || '').replace(/^\//, '');
 				const targetName = ((get('Name') || '').trim()).replace(/^\//, '');
+>>>>>>> c0dc24ad9ecb563fa9f4e32d909128aab4c5f6ce
 				if (!targetName || targetName === currentName)
 					return true;
 
