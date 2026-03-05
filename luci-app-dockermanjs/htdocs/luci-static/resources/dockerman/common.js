@@ -1015,6 +1015,8 @@ const dv = view.extend({
 			defaultPath = '/',
 			getFormData = null,
 			onUpdate = null,
+			onSuccess = null,
+			onError = null,
 			noFileUpload = false,
 		} = options;
 
@@ -1078,50 +1080,54 @@ const dv = view.extend({
 			]);
 		}
 
-		const xhr = new XMLHttpRequest();
-		xhr.timeout = 0;
+		return await new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.timeout = 0;
 
-		// Track upload progress
-		xhr.upload.addEventListener('progress', (e) => {
-			if (e.lengthComputable) {
-				const percentComplete = Math.round((e.loaded / e.total) * 100);
-				progressBar.style.width = percentComplete + '%';
-				progressText.textContent = percentComplete + '%';
-			}
-		});
-
-		// Track progressive response progress
-		let lastIndex = 0;
-		// let title = _('Progress');
-		xhr.onprogress = (upd) => {
-			const chunk = xhr.responseText.slice(lastIndex);
-			lastIndex = xhr.responseText.length;
-			const lines = chunk.split('\n').filter(Boolean);
-			for (const line of lines) {
-				try {
-					const msg = JSON.parse(line);
-					const percentComplete = Math.round((msg?.progressDetail?.current / msg?.progressDetail?.total) * 100) || 0;
-					if (msg.stream && msg.stream != '\n')
-						msgTxt.innerHTML = ansiToHtml(msg?.stream);
-					if (msg.status)
-						msgTitle.innerHTML = msg?.status
+			// Track upload progress
+			xhr.upload.addEventListener('progress', (e) => {
+				if (e.lengthComputable) {
+					const percentComplete = Math.round((e.loaded / e.total) * 100);
 					progressBar.style.width = percentComplete + '%';
 					progressText.textContent = percentComplete + '%';
-					if (onUpdate) onUpdate(msg);
-				} catch (e) {}
-			}
-		};
+				}
+			});
 
-		xhr.addEventListener('load', () => {
-			ui.hideModal();
-			if (xhr.status >= 200 && xhr.status < 300) {
-				view.showNotification(
-					_('Command successful'),
-					successMessage,
-					4000,
-					'success'
-				);
-			} else {
+			// Track progressive response progress
+			let lastIndex = 0;
+			xhr.onprogress = () => {
+				const chunk = xhr.responseText.slice(lastIndex);
+				lastIndex = xhr.responseText.length;
+				const lines = chunk.split('\n').filter(Boolean);
+				for (const line of lines) {
+					try {
+						const msg = JSON.parse(line);
+						const percentComplete = Math.round((msg?.progressDetail?.current / msg?.progressDetail?.total) * 100) || 0;
+						if (msg.stream && msg.stream != '\n')
+							msgTxt.innerHTML = ansiToHtml(msg?.stream);
+						if (msg.status)
+							msgTitle.innerHTML = msg?.status;
+						progressBar.style.width = percentComplete + '%';
+						progressText.textContent = percentComplete + '%';
+						if (onUpdate) onUpdate(msg);
+					} catch (e) {}
+				}
+			};
+
+			xhr.addEventListener('load', () => {
+				ui.hideModal();
+				if (xhr.status >= 200 && xhr.status < 300) {
+					view.showNotification(
+						_('Command successful'),
+						successMessage,
+						4000,
+						'success'
+					);
+					if (onSuccess) onSuccess(xhr);
+					resolve(xhr);
+					return;
+				}
+
 				let errorMsg = xhr.responseText || `HTTP ${xhr.status}`;
 				try {
 					const json = JSON.parse(xhr.responseText);
@@ -1133,34 +1139,40 @@ const dv = view.extend({
 					7000,
 					'error'
 				);
+				if (onError) onError(xhr);
+				reject(new Error(errorMsg));
+			});
+
+			xhr.addEventListener('error', () => {
+				ui.hideModal();
+				view.showNotification(
+					_('Command failed'),
+					_('Network error'),
+					7000,
+					'error'
+				);
+				if (onError) onError(xhr);
+				reject(new Error(_('Network error')));
+			});
+
+			xhr.addEventListener('abort', () => {
+				ui.hideModal();
+				view.showNotification(
+					_('Command cancelled'),
+					'',
+					5000,
+					'warning'
+				);
+				if (onError) onError(xhr);
+				reject(new Error(_('Command cancelled')));
+			});
+
+			if (noFileUpload) {
+				view.handleURLOnlyForm(xhr, method, params, destUrl);
+			} else {
+				view.handleFileUploadForm(xhr, method, getFormData, destUrl, commandPath, useRawFile);
 			}
 		});
-
-		xhr.addEventListener('error', () => {
-			ui.hideModal();
-			view.showNotification(
-				_('Command failed'),
-				_('Network error'),
-				7000,
-				'error'
-			);
-		});
-
-		xhr.addEventListener('abort', () => {
-			ui.hideModal();
-			view.showNotification(
-				_('Command cancelled'),
-				'',
-				5000,
-				'warning'
-			);
-		});
-
-		if (noFileUpload) {
-			this.handleURLOnlyForm(xhr, method, params, destUrl);
-		} else {
-			this.handleFileUploadForm(xhr, method, getFormData, destUrl, commandPath, useRawFile);
-		}
 	},
 
 
