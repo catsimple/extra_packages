@@ -27,6 +27,10 @@ fi
 exit 0
 endef
 
+ifeq ($(wildcard ../../luci.mk),)
+include $(TOPDIR)/feeds/luci/luci.mk
+else
 include ../../luci.mk
+endif
 
 # call BuildPackage - OpenWrt buildroot signature
