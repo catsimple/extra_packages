@@ -134,7 +134,7 @@ git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-nikki openwrt_nikk
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages openwrt-passwall-packages && mv -n openwrt-passwall-packages/* ./;rm -rf openwrt-passwall-packages
 git clone --depth 1 https://github.com/ple/luci-app-temp-status_emb-h81b
 git clone --depth 1 https://github.com/catsimple/luci-app-wifi-monitor
-git clone --depth 1 https://github.com/catsimple/luci-app-dockermanjs
+git clone --depth 1 https://github.com/catsimple/luci-app-dockerman-js
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall && mv -n passwall/luci-app-passwall ./;rm -rf passwall
 
 # # # # git clone --depth 1 https://github.com/SSSSSimon/tencentcloud-openwrt-plugin-ddns && mv -n tencentcloud-openwrt-plugin-ddns/tencentcloud_ddns ./luci-app-tencentddns; rm -rf tencentcloud-openwrt-plugin-ddns
