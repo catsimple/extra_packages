@@ -1585,14 +1585,21 @@ return dm2.dv.extend({
 		return '';
 	},
 
-	buildEndpointConfig(endpoint) {
+	isBuiltinNetwork(networkName) {
+		return ['none', 'bridge', 'host'].includes(String(networkName || '').toLowerCase());
+	},
+
+	buildEndpointConfig(endpoint, networkName) {
+		const builtInNetwork = this.isBuiltinNetwork(networkName);
 		const ipam = {};
-		const ipv4 = endpoint?.IPAMConfig?.IPv4Address || endpoint?.IPAddress;
-		const ipv6 = endpoint?.IPAMConfig?.IPv6Address || endpoint?.GlobalIPv6Address;
-		if (ipv4)
-			ipam.IPv4Address = ipv4;
-		if (ipv6)
-			ipam.IPv6Address = ipv6;
+		if (!builtInNetwork) {
+			const ipv4 = endpoint?.IPAMConfig?.IPv4Address || endpoint?.IPAddress;
+			const ipv6 = endpoint?.IPAMConfig?.IPv6Address || endpoint?.GlobalIPv6Address;
+			if (ipv4)
+				ipam.IPv4Address = ipv4;
+			if (ipv6)
+				ipam.IPv6Address = ipv6;
+		}
 
 		return this.pruneUndefined({
 			Aliases: endpoint?.Aliases,
@@ -1627,6 +1634,10 @@ return dm2.dv.extend({
 			extraNetworks[networkName] = endpoint;
 		}
 
+		const primaryEndpointConfig = primaryNetworkName
+			? this.buildEndpointConfig(primaryEndpoint, primaryNetworkName)
+			: undefined;
+
 		const createBody = this.pruneUndefined({
 			Hostname: config.Hostname,
 			Domainname: config.Domainname,
@@ -1651,9 +1662,9 @@ return dm2.dv.extend({
 			StopTimeout: config.StopTimeout,
 			Shell: config.Shell,
 			HostConfig: hostConfig,
-			NetworkingConfig: primaryNetworkName ? {
+			NetworkingConfig: primaryNetworkName && Object.keys(primaryEndpointConfig || {}).length ? {
 				EndpointsConfig: {
-					[primaryNetworkName]: this.buildEndpointConfig(primaryEndpoint),
+					[primaryNetworkName]: primaryEndpointConfig,
 				}
 			} : undefined,
 		});
@@ -1771,7 +1782,7 @@ return dm2.dv.extend({
 							id: networkName,
 							body: {
 								Container: newContainerId,
-								EndpointConfig: this.buildEndpointConfig(endpoint),
+								EndpointConfig: this.buildEndpointConfig(endpoint, networkName),
 							}
 						}).then((res) => {
 							if (res?.code >= 300)

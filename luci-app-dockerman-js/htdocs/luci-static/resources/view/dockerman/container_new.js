@@ -961,6 +961,7 @@ return dm2.dv.extend({
 				const name = get('name');
 				// const pull = toBool(get('pull'));
 				const network = get('network');
+				const builtInNetworks = new Set(['none', 'bridge', 'host']);
 				const publish = get('publish');
 				const command = get('command');
 				// const publish_all = toBool(get('publish_all'));
@@ -1027,9 +1028,9 @@ return dm2.dv.extend({
 						) : undefined,
 						Sysctls: sysctl ? listToKv(sysctl) : undefined,
 					},
-					NetworkingConfig: {
+					NetworkingConfig: (!builtInNetworks.has(String(network || '').toLowerCase()) && network) ? {
 						EndpointsConfig: { [network]: { IPAMConfig: { IPv4Address: get('ipv4') || null, IPv6Address: get('ipv6') || null } } },
-					}
+					} : undefined
 				};
 
 				// Parse volume entries and populate Mounts
