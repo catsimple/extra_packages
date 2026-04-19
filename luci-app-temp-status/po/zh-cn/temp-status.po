@@ -1,0 +1,55 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
+
+msgid "CPU Info"
+msgstr "CPU信息"
+
+msgid "No temperature sensors available"
+msgstr "没有可用的温度传感器"
+
+msgid "Sensor"
+msgstr "传感器"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "CPU Vcore"
+msgstr "CPU 核心电压"
+
+msgid "+5V"
+msgstr "+5V"
+
+msgid "+3.3V"
+msgstr "+3.3V"
+
+msgid "+12V"
+msgstr "+12V"
+
+msgid "PCH +1.0V"
+msgstr "PCH +1.0V"
+
+msgid "CPU Temperature"
+msgstr "CPU 温度"
+
+msgid "PCH Temperature"
+msgstr "PCH 温度"
+
+msgid "CPU Fan Speed"
+msgstr "CPU 风扇转速"
+
+msgid "CHA Fan Speed"
+msgstr "机箱风扇转速"
+
+msgid "CPU Frequency"
+msgstr "CPU 频率"
