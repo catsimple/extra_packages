@@ -18,6 +18,35 @@ OpenWrt >= 19.07.
 - 支持每个传感器独立配置换算、偏移、阈值和单位
 - 支持多个配置文件，适合不同板型或不同布局
 
+## Installation / 安装
+
+### OpenWrt 23.05
+
+```sh
+wget --no-check-certificate -O /tmp/luci-app-temp-status_0.3-5_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/23.05/luci-app-temp-status_0.3-5_all.ipk
+opkg install /tmp/luci-app-temp-status_0.3-5_all.ipk
+rm /tmp/luci-app-temp-status_0.3-5_all.ipk
+/etc/init.d/rpcd reload
+```
+
+### OpenWrt 21.02 / 22.03
+
+```sh
+wget --no-check-certificate -O /tmp/luci-app-temp-status_0.3-5_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/current/luci-app-temp-status_0.3-5_all.ipk
+opkg install /tmp/luci-app-temp-status_0.3-5_all.ipk
+rm /tmp/luci-app-temp-status_0.3-5_all.ipk
+/etc/init.d/rpcd reload
+```
+
+### OpenWrt 19.07
+
+```sh
+wget --no-check-certificate -O /tmp/luci-app-temp-status_0.3-3_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/19.07/luci-app-temp-status_0.3-3_all.ipk
+opkg install /tmp/luci-app-temp-status_0.3-3_all.ipk
+rm /tmp/luci-app-temp-status_0.3-3_all.ipk
+/etc/init.d/rpcd reload
+```
+
 ## Configuration / 配置
 
 The backend scans every `*.conf` file in `/etc/temp-status/`.
@@ -63,8 +92,25 @@ Supported fields / 支持字段:
 - `digits`: decimal precision on the status page / 显示小数位数
 - `unit`: display unit / 显示单位
 - `warn` and `critical`: temperature thresholds / 温度阈值
+- `base`, `baseVoltage`, or `base_voltage`: voltage reference value / 电压基准值
+- `warn_percent` or `warnPercent`: voltage warning deviation percent / 电压告警偏差百分比
+- `critical_percent` or `criticalPercent`: voltage critical deviation percent / 电压严重偏差百分比
 - `order`: sort order / 排序顺序
 - `enabled`: set to `false` to skip an entry / 设为 `false` 可禁用
+
+Voltage alarm logic:
+
+`abs(current - base) / base * 100`
+
+- if the deviation reaches `warn_percent`, the row turns orange
+- if the deviation reaches `critical_percent`, the row turns red
+
+电压告警逻辑：
+
+`abs(当前值 - 基准值) / 基准值 * 100`
+
+- 偏差达到 `warn_percent` 时变橙色
+- 偏差达到 `critical_percent` 时变红色
 
 ### Translation / 翻译
 
@@ -86,5 +132,4 @@ You can copy it as a template and create additional `.conf` files for other boar
 
 ## Screenshots / 截图
 
-<img width="1277" height="596" alt="Screenshot01" src="https://github.com/user-attachments/assets/9592c3f9-5c9b-4594-979c-557eeaa8ec7c" />
-
+![Screenshot](https://github.com/gSpotx2f/luci-app-temp-status/blob/master/screenshots/01.jpg)
