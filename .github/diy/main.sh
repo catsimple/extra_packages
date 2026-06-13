@@ -96,7 +96,7 @@ git clone --depth 1 https://github.com/vernesong/OpenClash && mv -u OpenClash/lu
 git clone https://github.com/muink/luci-app-netspeedtest.git ./luci-app-netspeedtest
 git clone https://github.com/cokebar/luci-app-vlmcsd.git ./luci-app-vlmcsd 
 git clone https://github.com/dwfreed/openwrt-vlmcsd.git ./openwrt-vlmcsd
-git clone https://github.com/kongfl888/luci-app-adguardhome.git ./luci-app-adguardhome
+git clone https://github.com/catsimple/luci-app-adguardhome.git ./luci-app-adguardhome
 # git clone --depth 1 https://github.com/kenzok8/wall && mv -n wall/* ./ ; rm -rf alist && rm -rf wall
 # git clone --depth 1 https://github.com/peter-tank/luci-app-fullconenat
 # git clone --depth 1 https://github.com/sirpdboy/sirpdboy-package && mv -n sirpdboy-package/luci-app-dockerman ./ ; rm -rf sirpdboy-package
